@@ -5,43 +5,64 @@ using UnityEngine.InputSystem;
 
 public class InteractionDetector : MonoBehaviour
 {
-    private IInteractable interactableInRange = null; // Closest Interactable
+    private IInteractable interactableInRange = null; 
     public GameObject interactionIcon;
 
-    // Start is called before the first frame update
+    // --- NEW VARIABLES ---
+    private int collectedCount = 0;   // Tracks how many you have
+    public int goalAmount = 5;        // How many you need to win
+    // ---------------------
+
     void Start()
     {
-        // Hide the icon (e.g., "Press E") at the start
         interactionIcon.SetActive(false);
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        // This function is called by the Player Input component
         if (context.performed)
         {
-            // If we have an object in range, call its Interact method
-            interactableInRange?.Interact();
+            // If there is an object nearby
+            if (interactableInRange != null)
+            {
+                // 1. Trigger the interaction (Chest disappears)
+                interactableInRange.Interact();
+
+                // 2. Count the item
+                collectedCount++;
+                Debug.Log($"Collected: {collectedCount} / {goalAmount}");
+
+                // 3. Check for Win
+                if (collectedCount >= goalAmount)
+                {
+                    WinGame();
+                }
+            }
         }
+    }
+
+    void WinGame()
+    {
+        Debug.Log("YOU WIN! Game Over.");
+        // Add code here to show a Win Screen or load the next level
+        // Example: UnityEngine.SceneManagement.SceneManager.LoadScene("WinScene");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // When we walk into something, check if it is "Interactable"
         if(collision.TryGetComponent(out IInteractable interactable) && interactable.CanInteract())
         {
             interactableInRange = interactable;
-            interactionIcon.SetActive(true); // Show the "Press E" icon
+            interactionIcon.SetActive(true); 
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // When we walk away, check if it was the object we were targeting
         if (collision.TryGetComponent(out IInteractable interactable) && interactable == interactableInRange)
         {
             interactableInRange = null;
-            interactionIcon.SetActive(false); // Hide the icon
+            interactionIcon.SetActive(false); 
         }
     }
 }
