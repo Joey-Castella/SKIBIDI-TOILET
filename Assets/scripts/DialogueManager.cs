@@ -69,6 +69,18 @@ public class DialogueManager : MonoBehaviour {
 
     void EndDialogue()
     {
+        // 1. Stop the typing loop immediately
+        StopAllCoroutines();
+
+        // 2. Stop any sound currently playing
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
+
+        // 3. Close the animation
         animator.SetBool("itsopen", false);
+        
+        Debug.Log("End of conversation.");
     }
 }
