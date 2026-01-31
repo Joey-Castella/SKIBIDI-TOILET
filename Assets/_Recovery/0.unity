@@ -57426,7 +57426,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   animator: {fileID: 1009648711}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 1009648707}
+  audioSource: {fileID: 1009648710}
+  footstepSound: {fileID: 8300000, guid: 85e368445e690b346a87721f2295a0e6, type: 3}
+  stepRate: 0.5
 --- !u!50 &1009648706
 Rigidbody2D:
   serializedVersion: 5
@@ -58708,6 +58711,9 @@ MonoBehaviour:
     sentences:
     - uish ni stupid shit to make vaccine
     - 'i could do this to help them
+
+'
+    - 'ight les get these 5 items
 
 '
 --- !u!58 &1864734395
