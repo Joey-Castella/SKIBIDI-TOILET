@@ -6,12 +6,17 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour {
 
-
     public TextMeshProUGUI dialogueText;
     public Animator animator;
+    
+    // --- NEW AUDIO VARIABLES ---
+    public AudioSource audioSource;  // Drag the AudioSource component here
+    public AudioClip typingSound;    // Drag your "blip" or "click" sound here
+    public float typingSpeed = 0.05f; // Speed of typing (0.05 is standard)
+    // ---------------------------
+
     private Queue<string> sentences;
 
-    // Use this for initialization
     void Start () {
         sentences = new Queue<string>();
     }
@@ -19,47 +24,51 @@ public class DialogueManager : MonoBehaviour {
     public void StartDialogue (Dialogue dialogue)
     {
         animator.SetBool("itsopen", true);
-
-        // Clear any old sentences from a previous conversation
         sentences.Clear();
 
-        // Add the new sentences to the queue
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
         }
 
-        // Show the first sentence immediately
         DisplayNextSentence();
     }
 
     public void DisplayNextSentence ()
     {
-        // Check if we ran out of sentences
         if (sentences.Count == 0)
         {
             EndDialogue();
             return;
         }
 
-        // Get the next sentence from the queue and print it
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
     }
 
     IEnumerator TypeSentence (string sentence)
-{
-    dialogueText.text = "";
-    foreach (char letter in sentence.ToCharArray())
     {
-        dialogueText.text += letter;
-        yield return null;
+        dialogueText.text = "";
+        foreach (char letter in sentence.ToCharArray())
+        {
+            dialogueText.text += letter;
+
+            // --- PLAY SOUND HERE ---
+            // Only play sound if we have one, and maybe skip spaces
+            if (!char.IsWhiteSpace(letter) && audioSource != null)
+                {
+                    audioSource.PlayOneShot(typingSound);
+                }
+            // -----------------------
+
+            // Use WaitForSeconds instead of null so the sound has room to breathe
+            yield return new WaitForSeconds(typingSpeed);
+        }
     }
-}
+
     void EndDialogue()
     {
         animator.SetBool("itsopen", false);
     }
-
 }

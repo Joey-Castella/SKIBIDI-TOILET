@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mono.Cecil.Cil;
 using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour {
@@ -14,6 +15,11 @@ public class DialogueTrigger : MonoBehaviour {
         FindFirstObjectByType<DialogueManager>().StartDialogue(dialogue);
     }
 
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        TriggerDialogue();
+        
+        Destroy(gameObject);
+    }
 
-    
 }
