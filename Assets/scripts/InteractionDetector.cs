@@ -8,31 +8,43 @@ public class InteractionDetector : MonoBehaviour
     private IInteractable interactableInRange = null; 
     public GameObject interactionIcon;
 
-    // --- NEW VARIABLES ---
-    private int collectedCount = 0;   // Tracks how many you have
-    public int goalAmount = 5;        // How many you need to win
-    // ---------------------
+    private int collectedCount = 0;   
+    public int goalAmount = 5;        
+
+    // --- CHANGE IS HERE ---
+    // Only 1 variable now. Drag the actual Enemy from your Hierarchy here.
+    public GameObject existingEnemy; 
+    // ----------------------
 
     void Start()
     {
         interactionIcon.SetActive(false);
+
+        // Optional: Hide the enemy automatically when the game starts
+        if (existingEnemy != null)
+        {
+            existingEnemy.SetActive(false);
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            // If there is an object nearby
             if (interactableInRange != null)
             {
-                // 1. Trigger the interaction (Chest disappears)
                 interactableInRange.Interact();
-
-                // 2. Count the item
                 collectedCount++;
                 Debug.Log($"Collected: {collectedCount} / {goalAmount}");
 
-                // 3. Check for Win
+                // --- WAKE UP THE ENEMY ---
+                // If we have collected 2 items (or change this to 1 if you want)
+                if (collectedCount == 2) 
+                {
+                    ActivateEnemy();
+                }
+                // -------------------------
+
                 if (collectedCount >= goalAmount)
                 {
                     WinGame();
@@ -41,11 +53,22 @@ public class InteractionDetector : MonoBehaviour
         }
     }
 
+    void ActivateEnemy()
+    {
+        if (existingEnemy != null)
+        {
+            existingEnemy.SetActive(true); // Turn him on!
+            Debug.Log("⚠️ The Enemy has awakened!");
+        }
+        else
+        {
+            Debug.Log("No enemy assigned to wake up.");
+        }
+    }
+
     void WinGame()
     {
-        Debug.Log("YOU WIN! Game Over.");
-        // Add code here to show a Win Screen or load the next level
-        // Example: UnityEngine.SceneManagement.SceneManager.LoadScene("WinScene");
+        Debug.Log("YOU WIN!");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

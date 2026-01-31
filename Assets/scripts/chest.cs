@@ -4,32 +4,35 @@ using UnityEngine;
 
 public class chest : MonoBehaviour, IInteractable
 {
-    // Properties
     public string GoneID { get; private set; }
-    public GameObject itemPrefab; // Optional: Item that drops before it disappears
+    public GameObject itemPrefab;
+    
+    // 1. Add this variable to hold the text for this specific item
+    public Dialogue dialogue; 
 
-    // Start is called before the first frame update
     void Start()
     {
-        // We use your GlobalHelper here to fill in the blank from the image
         GoneID = GlobalHelper.GenerateUniqueID(gameObject);
     }
 
     public bool CanInteract()
     {
-        // It can always be interacted with as long as it exists
         return true;
     }
 
     public void Interact()
     {
-        // 1. Drop loot if assigned
+        // 2. TRIGGER DIALOGUE HERE
+        // Find the manager and pass it the dialogue data from this chest
+        FindFirstObjectByType<DialogueManager>().StartDialogue(dialogue);
+
+        // 3. Drop loot (if any)
         if (itemPrefab != null)
         {
             Instantiate(itemPrefab, transform.position, Quaternion.identity);
         }
 
-        // 2. Make it GONE
+        // 4. Destroy the object
         Debug.Log($"Object {GoneID} has been removed.");
         Destroy(gameObject);
     }
