@@ -812,6 +812,7 @@ GameObject:
   - component: {fileID: 368234859}
   - component: {fileID: 368234858}
   - component: {fileID: 368234857}
+  - component: {fileID: 368234860}
   m_Layer: 5
   m_Name: Start Button
   m_TagString: Untagged
@@ -895,6 +896,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 368234860}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: PlayGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &368234858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -933,6 +946,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368234855}
   m_CullTransparentMesh: 1
+--- !u!114 &368234860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368234855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389c97f7519a64246a5638df9846043d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &384514333
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,6 +1434,7 @@ GameObject:
   - component: {fileID: 804112292}
   - component: {fileID: 804112291}
   - component: {fileID: 804112290}
+  - component: {fileID: 804112293}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -1530,6 +1556,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804112288}
   m_CullTransparentMesh: 1
+--- !u!114 &804112293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804112288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a53b98956ad1f64c934042e09751edf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &960900619
 GameObject:
   m_ObjectHideFlags: 0
