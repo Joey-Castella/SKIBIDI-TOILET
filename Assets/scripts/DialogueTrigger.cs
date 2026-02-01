@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Mono.Cecil.Cil;
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour {
