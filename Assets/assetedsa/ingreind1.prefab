@@ -106,6 +106,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::chest
   itemPrefab: {fileID: 0}
+  dialogue:
+    name: 
+    sentences: []
 --- !u!61 &7560331953899528867
 BoxCollider2D:
   m_ObjectHideFlags: 0

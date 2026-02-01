@@ -5,7 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadScene("Vaksin Pickup");
+        SceneManager.LoadScene("0");
     }
 
     public void QuitGame()

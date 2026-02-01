@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/main menu.unity
     guid: 639e28a3cf04c214e83f0168c5a13ace
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Vaksin Pickup.unity
     guid: ae0d77a1b3061fb46b9e56e869889eda
+  - enabled: 1
+    path: Assets/_Recovery/0.unity
+    guid: 3c06c5c56badf2544bb360754018a0fe
   - enabled: 0
     path: Assets/Scenes/quit.unity
     guid: 0ca3f3bee789e74428b84aa30c794aa8

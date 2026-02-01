@@ -81,7 +81,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 67
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: d2acbbdb305b5d54bb07986e13e54f17, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -106,6 +106,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::chest
   itemPrefab: {fileID: 0}
+  dialogue:
+    name: 
+    sentences: []
 --- !u!61 &1286989823280188976
 BoxCollider2D:
   m_ObjectHideFlags: 0
