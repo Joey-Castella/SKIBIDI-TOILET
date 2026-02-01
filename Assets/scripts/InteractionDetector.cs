@@ -3,46 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-using UnityEngine.SceneManagement;
-using Unity.VisualScripting; // <--- NEEDED FOR RESTART
+using UnityEngine.SceneManagement; 
 
 public class InteractionDetector : MonoBehaviour
 {
-    // ... (Your existing variables) ...
     private IInteractable interactableInRange = null; 
     public GameObject interactionIcon;
     private int collectedCount = -1;   
     public int goalAmount = 5;
     public TextMeshProUGUI countText; 
     public GameObject existingEnemy; 
+    public GameObject gameOverScreen; 
 
-    // --- NEW GAME OVER VARIABLES ---
-    public GameObject gameOverScreen; // Drag your Game Over Panel here
-    // -------------------------------
+    // --- NEW WIN VARIABLE ---
+    public GameObject winScreenParent; // Drag the PARENT object of your 5 slides here
+    // ------------------------
 
     void Start()
     {
-        // ... (Your existing Start code) ...
         interactionIcon.SetActive(false);
         if (existingEnemy != null) existingEnemy.SetActive(false);
         if (countText != null) countText.gameObject.SetActive(false);
-        
-        // Hide Game Over screen at start
         if (gameOverScreen != null) gameOverScreen.SetActive(false);
         
-        // Make sure game time is running (in case we died before)
+        // Hide the Win Screen at start too!
+        if (winScreenParent != null) winScreenParent.SetActive(false);
+
         Time.timeScale = 1f; 
     }
 
-    // ... (Keep OnInteract, UpdateUI, ActivateEnemy exactly the same) ...
     public void OnInteract(InputAction.CallbackContext context)
     {
-        // (Paste your existing OnInteract code here)
-        // Only including this so you know where it goes. 
-        // Don't delete your existing code!
         if (context.performed)
         {
-             // ... logic ...
              if (interactableInRange != null)
              {
                  interactableInRange.Interact();
@@ -58,37 +51,42 @@ public class InteractionDetector : MonoBehaviour
         }
     }
 
-    // --- NEW GAME OVER FUNCTION ---
+    // --- UPDATED WIN FUNCTION ---
+    void WinGame()
+    {
+        Debug.Log("YOU WIN!");
+
+        // 1. Hide the gameplay UI (so it doesn't block the slides)
+        if (countText != null) countText.gameObject.SetActive(false);
+        if (interactionIcon != null) interactionIcon.SetActive(false);
+
+        // 2. Turn on the Win Slides
+        if (winScreenParent != null)
+        {
+            winScreenParent.SetActive(true);
+            Time.timeScale = 0f; // Freeze game
+        }
+    }
+    // -----------------------------
+
     public void GameOver()
     {
-        Debug.Log("GAME OVER!");
-        
-        // 1. Show the Game Over Screen
-        if (gameOverScreen != null)
-        {
-            gameOverScreen.SetActive(true);
-        }
-
-        // 2. Stop the game (Freeze time)
+        if (gameOverScreen != null) gameOverScreen.SetActive(true);
         Time.timeScale = 0f;
     }
 
     public void RestartGame()
     {
-        // Reloads the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    // -----------------------------
-
+    
     public void Quit()
     {
         Application.Quit();
     }
 
-    // ... (Keep the rest of your functions: WinGame, OnTriggerEnter, etc.) ...
-     void UpdateUI() { if (countText != null) countText.text = "Items: " + collectedCount + " / " + goalAmount; }
-     void ActivateEnemy() { if (existingEnemy != null) existingEnemy.SetActive(true); }
-     void WinGame() { if (countText != null) countText.text = "YOU ESCAPED!"; }
-     private void OnTriggerEnter2D(Collider2D collision) { if(collision.TryGetComponent(out IInteractable i) && i.CanInteract()) { interactableInRange = i; interactionIcon.SetActive(true); } }
-     private void OnTriggerExit2D(Collider2D collision) { if (collision.TryGetComponent(out IInteractable i) && i == interactableInRange) { interactableInRange = null; interactionIcon.SetActive(false); } }
+    void UpdateUI() { if (countText != null) countText.text = "Items: " + collectedCount + " / " + goalAmount; }
+    void ActivateEnemy() { if (existingEnemy != null) existingEnemy.SetActive(true); }
+    private void OnTriggerEnter2D(Collider2D collision) { if(collision.TryGetComponent(out IInteractable i) && i.CanInteract()) { interactableInRange = i; interactionIcon.SetActive(true); } }
+    private void OnTriggerExit2D(Collider2D collision) { if (collision.TryGetComponent(out IInteractable i) && i == interactableInRange) { interactableInRange = null; interactionIcon.SetActive(false); } }
 }
